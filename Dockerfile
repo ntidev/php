@@ -1,4 +1,4 @@
-FROM php:7.1.25-fpm-jessie
+FROM php:7.1.27-fpm-stretch
 
 LABEL maintainer='Benjamin Vison <benjamin@syneteksolutions.com>'
 
