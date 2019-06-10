@@ -1,4 +1,4 @@
-FROM php:7.1.27-fpm-stretch
+FROM php:7.1.30-fpm-stretch
 
 LABEL maintainer='Benjamin Vison <benjamin@syneteksolutions.com>'
 
@@ -14,10 +14,13 @@ LABEL maintainer='Benjamin Vison <benjamin@syneteksolutions.com>'
          g++ \
          wkhtmltopdf \
          xvfb \
+         libmemcached-dev libmemcached11 libmemcachedutil2 build-essential \ 
     && docker-php-ext-install -j$(nproc) bcmath iconv mcrypt mbstring pdo pdo_mysql mysqli opcache zip xml xmlrpc xmlwriter opcache exif \
     && docker-php-ext-configure intl \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd intl \
+    && pecl install memcached \
+    && docker-php-ext-enable memcached \
     && apt-get clean autoclean && apt-get autoremove --yes && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 COPY ./www.conf /usr/local/etc/php-fpm.d/www.conf
