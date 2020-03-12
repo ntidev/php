@@ -12,9 +12,13 @@ LABEL maintainer='Benjamin Vison <benjamin@syneteksolutions.com>'
          libicu-dev \
          libxml2-dev \
          g++ \
-         wkhtmltopdf \
-         xvfb \
+         wget \
          libmemcached-dev libmemcached11 libmemcachedutil2 build-essential \ 
+    # wkhtmltopdf installation
+    && wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb -P /var/www \    
+    && dpkg --configure -a \
+    && apt-get install -y xvfb libfontconfig fontconfig libpng16-16 libxrender1 xfonts-75dpi build-essential xorg \
+    && dpkg -i /var/www/wkhtmltox_0.12.5-1.stretch_amd64.deb \   
     && docker-php-ext-install -j$(nproc) bcmath sockets iconv mcrypt mbstring pdo pdo_mysql mysqli opcache zip xml xmlrpc xmlwriter opcache exif soap \
     && docker-php-ext-configure intl \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
