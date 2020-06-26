@@ -2,6 +2,8 @@ FROM php:7.1.30-fpm-stretch
 
 LABEL maintainer='Benjamin Vison <benjamin@syneteksolutions.com>'
 
+ENV DEBIAN_FRONTEND noninteractive
+
  # Install dependencies
  RUN apt-get update && apt-get install -y \
          libfreetype6-dev \
