@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y \
          wget \
          libonig-dev \
          libzip-dev \
-    # wkhtmltopdf installation
+    # wkhtmltox installation
     && wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.buster_amd64.deb -P /var/www \    
     && dpkg --configure -a \
     && apt-get install -y xvfb libfontconfig fontconfig libpng16-16 libxrender1 xfonts-75dpi build-essential xorg \
