@@ -2,6 +2,8 @@ FROM php:7.4.6-fpm-buster
 
 LABEL maintainer='Benjamin Vison <benjamin@syneteksolutions.com>'
 
+ENV DEBIAN_FRONTEND noninteractive
+
 # Install dependencies
 RUN apt-get update && apt-get install -y \
          libfreetype6-dev \
@@ -17,10 +19,15 @@ RUN apt-get update && apt-get install -y \
          libicu-dev \
          libxml2-dev \
          g++ \
-         wkhtmltopdf \
-         xvfb \
+         wget \
          libonig-dev \
          libzip-dev \
+    # wkhtmltopdf installation
+    && wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.buster_amd64.deb -P /var/www \    
+    && dpkg --configure -a \
+    && apt-get install -y xvfb libfontconfig fontconfig libpng16-16 libxrender1 xfonts-75dpi build-essential xorg \
+    && dpkg -i /var/www/wkhtmltox_0.12.5-1.buster_amd64.deb \  
+    && cp /usr/local/bin/wkhtmlto* /usr/bin
     && pecl config-set php_ini "${PHP_INI_DIR}/php.ini" \
     && pecl install mcrypt-1.0.3 \
     && docker-php-ext-enable mcrypt \
